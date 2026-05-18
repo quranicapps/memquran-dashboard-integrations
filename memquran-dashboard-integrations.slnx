@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/Integrations/" />
+  <Folder Name="/Presentation/">
+    <Project Path="src/MemQuranDashboard.Integrations.Api/MemQuranDashboard.Integrations.Api.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
+</Solution>
