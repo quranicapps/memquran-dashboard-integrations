@@ -1,7 +1,13 @@
 <Solution>
+  <Folder Name="/Core/">
+    <Project Path="src/Integrations.Core/Integrations.Core.csproj" />
+  </Folder>
+  <Folder Name="/Infrastructure/">
+    <Project Path="src/Integrations.Infrastructure/Integrations.Infrastructure.csproj" />
+  </Folder>
   <Folder Name="/Integrations/" />
   <Folder Name="/Presentation/">
-    <Project Path="src/MemQuranDashboard.Integrations.Api/MemQuranDashboard.Integrations.Api.csproj" />
+    <Project Path="src/Integrations.Api/Integrations.Api.csproj" />
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path=".gitignore" />
