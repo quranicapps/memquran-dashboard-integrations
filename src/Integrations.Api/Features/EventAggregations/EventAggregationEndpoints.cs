@@ -1,5 +1,8 @@
-﻿using Integrations.Core.Contracts;
+﻿using Integrations.Api.Settings;
+using Integrations.Core.Contracts;
 using Integrations.Core.Models;
+using Integrations.Sentry.Client.Contracts;
+using Integrations.Sentry.Client.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 // ReSharper disable once CheckNamespace
@@ -14,17 +17,25 @@ public static class EventAggregationEndpoints
             .WithTags("Event Aggregations");
 
         apiGroup
-            .MapGet("", Get)
-            .WithName("GetEventAggregations");
+            .MapGet("", GetAllEventAggregationsAsync)
+            .WithName("GetAllEventAggregations");
+        
+        apiGroup
+            .MapGet("/{eventType:int}/{eventPeriod:int}", GetEventAggregationsByTypeAndPeriodAsync)
+            .WithName("GetEventAggregationsByTypeAndPeriod");
+        
+        apiGroup
+            .MapGet("sentry/{dataset}/{statsPeriod}", GetSentryEventAggregationsAsync)
+            .WithName("GetSentryEventAggregations");
 
         return app;
     }
 
-    private static async Task<Results<Ok<IEnumerable<EventAggregation>>, InternalServerError>> Get(IEventAggregationRepository<EventAggregation> repository)
+    private static async Task<Results<Ok<ApiResponse<IEnumerable<EventAggregation>>>, InternalServerError>> GetAllEventAggregationsAsync(IEventAggregationRepository<EventAggregation> repository)
     {
-        var eventAggregations = await repository.GetAllAsync();
+        var eventAggregations = await repository.GetAllAsync(EventType.All, EventPeriod.Last30Days);
 
-        return TypedResults.Ok(eventAggregations.Select(x => new EventAggregation
+        var aggregations = eventAggregations.Select(x => new EventAggregation
         {
             Id = x.Id,
             EventType = x.EventType,
@@ -34,6 +45,32 @@ public static class EventAggregationEndpoints
             LastModifiedAt = x.LastModifiedAt,
             CreatedBy = x.CreatedBy,
             LastModifiedBy = x.LastModifiedBy
-        }));
+        }).ToList();
+        
+        return TypedResults.Ok(new ApiResponse<IEnumerable<EventAggregation>>(aggregations, Meta: new { aggregations.Count}));
+    }
+
+    private static async Task<Results<Ok<ApiResponse<EventAggregation>>, NotFound>> GetEventAggregationsByTypeAndPeriodAsync(IEventAggregationRepository<EventAggregation> repository, int eventType, int eventPeriod)
+    {
+        var eventAggregation = await repository.GetLatestAsync((EventType)eventType, (EventPeriod)eventPeriod);
+
+        if (eventAggregation == null)
+        {
+            return TypedResults.NotFound();
+        }
+
+        return TypedResults.Ok(new ApiResponse<EventAggregation>(eventAggregation, $"Latest Event Aggregation for eventType: {eventAggregation.EventType} and eventPeriod: {eventAggregation.EventPeriod}"));
+    }
+
+    private static async Task<Results<Ok<SentryEventsResponse>, NotFound, InternalServerError>> GetSentryEventAggregationsAsync(HttpContext context, ISentryHttpClient sentryHttpClient, SentrySettings sentrySettings, string dataset, string statsPeriod)
+    {
+        var response = await sentryHttpClient.GetEventsAsync(sentrySettings.OrganizationName, sentrySettings.ProjectId, sentrySettings.Environment, dataset, true, "count(span.duration)", statsPeriod, "span.name:\"root /\"");
+        
+        if (response == null)
+        {
+            return TypedResults.NotFound();
+        }
+
+        return TypedResults.Ok(response);
     }
 }

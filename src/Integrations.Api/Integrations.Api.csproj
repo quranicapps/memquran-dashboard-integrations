@@ -13,6 +13,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="10.6.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -22,6 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Integrations.Sentry.Client\Integrations.Sentry.Client.csproj" />
       <ProjectReference Include="..\Integrations.Core\Integrations.Core.csproj" />
       <ProjectReference Include="..\Integrations.Infrastructure\Integrations.Infrastructure.csproj" />
     </ItemGroup>

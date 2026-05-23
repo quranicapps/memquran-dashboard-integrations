@@ -3,9 +3,12 @@
     <Project Path="src/Integrations.Core/Integrations.Core.csproj" />
   </Folder>
   <Folder Name="/Infrastructure/">
+    <Project Path="Integrations.Sentry.Client/Integrations.Sentry.Client.csproj" />
     <Project Path="src/Integrations.Infrastructure/Integrations.Infrastructure.csproj" />
   </Folder>
-  <Folder Name="/Integrations/" />
+  <Folder Name="/Integrations/">
+    <Project Path="Integrations.Sentry.Functions/Integrations.Sentry.Functions.csproj" />
+  </Folder>
   <Folder Name="/Presentation/">
     <Project Path="src/Integrations.Api/Integrations.Api.csproj" />
   </Folder>
