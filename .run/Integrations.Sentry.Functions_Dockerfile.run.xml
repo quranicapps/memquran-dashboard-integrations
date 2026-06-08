@@ -1,0 +1,44 @@
+﻿<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Integrations.Sentry.Functions/Dockerfile" type="docker-deploy" factoryName="dockerfile" server-name="localhost">
+    <deployment type="dockerfile">
+      <settings>
+        <option name="imageTag" value="integrations.sentry.functions:latest" />
+        <option name="containerName" value="integrations.sentry.functions" />
+        <option name="contextFolderPath" value="." />
+        <option name="envVars">
+          <list>
+            <DockerEnvVarImpl>
+              <option name="name" value="AzureWebJobsStorage" />
+              <option name="value" value="DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://host.docker.internal:10000/devstoreaccount1;" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="FUNCTIONS_WORKER_RUNTIME" />
+              <option name="value" value="dotnet-isolated" />
+            </DockerEnvVarImpl>
+          </list>
+        </option>
+        <option name="portBindings">
+          <list>
+            <DockerPortBindingImpl>
+              <option name="containerPort" value="80" />
+              <option name="hostPort" value="7268" />
+            </DockerPortBindingImpl>
+          </list>
+        </option>
+        <option name="commandLineOptions" value="--env-file .\Integrations.Sentry.Functions\local.env" />
+        <option name="showCommandPreview" value="true" />
+        <option name="sourceFilePath" value="Integrations.Sentry.Functions/Dockerfile" />
+        <option name="volumeBindings">
+          <list>
+            <DockerVolumeBindingImpl>
+              <option name="containerPath" value="/azure-functions-host/Secrets" />
+              <option name="hostPath" value="C:\Users\atifr\.docker-data\azure\memquran-dashboard-integrations\func-secrets\" />
+            </DockerVolumeBindingImpl>
+          </list>
+        </option>
+      </settings>
+    </deployment>
+    <EXTENSION ID="com.jetbrains.rider.docker.debug" isFastModeEnabled="true" isSslEnabled="false" />
+    <method v="2" />
+  </configuration>
+</component>

@@ -62,4 +62,5 @@ nunit-*.xml
 .idea/
 
 *.env.*
+*.env*
 *.dotsettings*
