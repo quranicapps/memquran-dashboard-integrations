@@ -23,7 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Integrations.Sentry.Client\Integrations.Sentry.Client.csproj" />
+      <ProjectReference Include="..\Integrations.Sentry.Client\Integrations.Sentry.Client.csproj" />
       <ProjectReference Include="..\Integrations.Core\Integrations.Core.csproj" />
       <ProjectReference Include="..\Integrations.Infrastructure\Integrations.Infrastructure.csproj" />
     </ItemGroup>

@@ -25,9 +25,9 @@
             </DockerPortBindingImpl>
           </list>
         </option>
-        <option name="commandLineOptions" value="--env-file .\Integrations.Sentry.Functions\local.env" />
+        <option name="commandLineOptions" value="--env-file .\src\Integrations.Sentry.Functions\local.env" />
         <option name="showCommandPreview" value="true" />
-        <option name="sourceFilePath" value="Integrations.Sentry.Functions/Dockerfile" />
+        <option name="sourceFilePath" value="src/Integrations.Sentry.Functions/Dockerfile" />
         <option name="volumeBindings">
           <list>
             <DockerVolumeBindingImpl>
