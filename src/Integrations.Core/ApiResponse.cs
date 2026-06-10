@@ -1,4 +1,4 @@
-﻿namespace Integrations.Core.Models;
+﻿namespace Integrations.Core;
 
 public record ApiResponse<T>(
     T? Data,

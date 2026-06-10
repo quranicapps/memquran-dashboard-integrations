@@ -1,4 +1,5 @@
 ﻿using Integrations.Api.Settings;
+using Integrations.Core;
 using Integrations.Core.Contracts;
 using Integrations.Core.Models;
 using Integrations.Sentry.Client.Contracts;
@@ -27,6 +28,10 @@ public static class EventAggregationEndpoints
         apiGroup
             .MapGet("sentry/{dataset}/{statsPeriod}", GetSentryEventAggregationsAsync)
             .WithName("GetSentryEventAggregations");
+        
+        apiGroup
+            .MapGet("TooManyRequests", BadSentryEventAggregationsAsync)
+            .WithName("Test");
 
         return app;
     }
@@ -72,5 +77,12 @@ public static class EventAggregationEndpoints
         }
 
         return TypedResults.Ok(response);
+    }
+    
+    private static async Task<StatusCodeHttpResult> BadSentryEventAggregationsAsync(HttpContext context, ISentryHttpClient sentryHttpClient)
+    {
+        await Task.CompletedTask;
+
+        return TypedResults.StatusCode(429);
     }
 }
